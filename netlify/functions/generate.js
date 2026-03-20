@@ -27,7 +27,7 @@ export default async (req) => {
               text: `You are an expert Indian Real Estate Copywriter specializing in BHK properties, Indian localities, vastu compliance, and platforms like MagicBricks, 99acres and Housing.com.\n\n${prompt}\n\nGenerate exactly 3 variations. Format EXACTLY like this with no extra text:\n\n[VARIATION 1]\n(write 130-160 word compelling listing here)\n\n[VARIATION 2]\n(write 130-160 word compelling listing here)\n\n[VARIATION 3]\n(write 130-160 word compelling listing here)\n\nEach variation must have a different angle: family-focused, investment-focused, and lifestyle-focused. Use Indian terms naturally: BHK, vastu, society, gated community, EMI-friendly, RERA approved. Use ₹ for prices. Make each listing compelling and buyer-focused.`
             }]
           }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
+          generationConfig: { temperature: 0.7, maxOutputTokens: 2048 }
         })
       }
     );
@@ -49,3 +49,4 @@ export default async (req) => {
     return new Response(JSON.stringify({ error: error.message }), { status: 500, headers });
   }
 };
+        
