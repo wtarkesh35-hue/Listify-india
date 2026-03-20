@@ -286,12 +286,23 @@ async function gen(){
       return;
     }
 
-    var txt=d.text;
-    // Clean markdown formatting
-    txt = txt.replace(/\*\*/g,'').replace(/\*/g,'').replace(/#{1,6} /g,'');
-    // Split into variations
-    var parts=txt.split(/\[VARIATION \d+\]/).map(function(s){return s.trim()}).filter(Boolean);
-    vs=parts.length>=2?parts:[txt];
+    // 1. Get raw text from backend response
+    var txt = d.text;
+
+    // 2. Remove all Markdown symbols
+    var cleanTxt = txt.replace(/(\*\*|\*|#{1,6}\s?|__|_)/g, '')
+                      .replace(/^\s*[-+*]\s+/gm, '');
+
+    // 3. Split by [VARIATION X] tags
+    var parts = cleanTxt.split(/\[VARIATION\s*\d+\]/i)
+                        .map(function(s) { return s.trim(); })
+                        .filter(function(s) { return s.length > 5; });
+
+    // 4. Assign to variations array
+    vs = parts.length > 0 ? parts : [cleanTxt];
+
+    // 5. Limit to 3 variations
+    vs = vs.slice(0, 3);
 
     vt.innerHTML='';
     vs.forEach(function(_,i){
