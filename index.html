@@ -287,6 +287,9 @@ async function gen(){
     }
 
     var txt=d.text;
+    // Clean markdown formatting
+    txt = txt.replace(/\*\*/g,'').replace(/\*/g,'').replace(/#{1,6} /g,'');
+    // Split into variations
     var parts=txt.split(/\[VARIATION \d+\]/).map(function(s){return s.trim()}).filter(Boolean);
     vs=parts.length>=2?parts:[txt];
 
